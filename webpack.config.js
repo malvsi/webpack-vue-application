@@ -27,7 +27,8 @@ module.exports = {
         rules: [
             {test: /\.css$/, use: ['style-loader','css-loader']},
             {test: /\.vue$/, use: 'vue-loader'},
-            {test: /\.(ttf)/, use: 'url-loader'}
+            {test: /\.(ttf)/, use: 'url-loader'},
+            {test: /\.less$/, use: ['style-loader','css-loader','less-loader']}
         ]
     },
     resolve: {

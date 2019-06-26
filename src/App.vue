@@ -7,7 +7,7 @@
     </div>
 
     <nav class="mui-bar mui-bar-tab">
-      <router-link to="/home" class="mui-tab-item mui-active active">
+      <router-link to="/home" class="mui-tab-item">
         <span class="mui-icon mui-icon-home"></span>
         <span class="mui-tab-label">首页</span>
       </router-link>
