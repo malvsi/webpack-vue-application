@@ -6,10 +6,15 @@ import { Header } from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import './lib/mui-master/examples/hello-mui/css/icons-extra.css';
 import './lib/mui-master/examples/hello-mui/fonts/mui-icons-extra.ttf'
+import VueRouter from 'vue-router';
+import router from './router.js'
+
+Vue.use(VueRouter);
 
 Vue.component(Header.name, Header);
 
 var vm = new Vue({
     el: '#app',
     render: c=> c(app),
+    router,
 })
