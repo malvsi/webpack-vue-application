@@ -1,0 +1,10 @@
+{
+    "plugins": [
+        ["component", [
+            {
+                "liberayName": "mint-ui",
+                "style": true
+            }
+        ]]
+    ]
+}
