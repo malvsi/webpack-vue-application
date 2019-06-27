@@ -81,6 +81,7 @@ export default home;
 
 
 <style lang="less" scoped>
+
 .mint-swipe {
   height: 300px;
 
