@@ -8,20 +8,30 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router@3.0.6/dist/vue-router.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
 </head>
 
 <body>
     <div id='app'>
-        <img src="https:\/\/ss1.baidu.com\/6ONXsjip0QIZ8tyhnq\/it\/u=120907153,840755297&fm=58&s=DC982CD57A5F7BDC419D50270300F046" onclick="javascript:window.location.href='http://www.baidu.com'">
     </div>
 
     <script>
-        let app = new Vue({
-            el: "#app",
-            data: {
-                imgurl: 'https:\/\/ss0.baidu.com\/6ONWsjip0QIZ8tyhnq\/it\/u=2873114088,494228514&fm=58',
-            },
-        })
+        var s = [{
+            name: 'zz',
+            age: 12
+        },{
+            name: 'asas',
+            lisk: 'soias'
+        }];
+
+        var a = [
+            {s: 'ss'},
+            {shs: 'ashuis',age: 12}
+        ];
+
+        var s = s.concat(a);
+        // console.log(ss);
+        console.log(s);
     </script>
 </body>
 
