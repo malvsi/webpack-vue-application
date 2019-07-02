@@ -7,17 +7,17 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.imgsrc">
-        <a class="mui-navigate-right">
+      <li class="mui-table-view-cell mui-media" v-for="item in newsList" :key="item.docid">
+        <router-link class="mui-navigate-right" :to="'/home/newsdetail/' + item.docid">
           <img class="mui-media-object mui-pull-left" :src="item.imgsrc">
           <div class="mui-media-body">
             <h1>{{ item.title }}</h1>
             <p class="mui-ellipsis">
-              <span>发表时间：{{ item.mtime }}</span>
+              <span>发表时间：{{ item.mtime | formatDate }}</span>
               <span>点击：{{ item.votecount | formatNum }}次</span>
             </p>
           </div>
-        </a>
+        </router-link>
       </li>
     </ul>
 
@@ -70,6 +70,7 @@ export default {
         )
         .then(result => {
           this.newsList = this.newsList.concat(result.body.T1467284926140);
+          console.log(this.newsList);
         })
         .catch(err => {
           Totas("加载失败： " + err);
