@@ -9,11 +9,11 @@ import VueRouter from 'vue-router';
 import router from './router.js';
 import VueResource from 'vue-resource';
 import comment from './components/subcomponents/comment.vue';
-
+import { Swipe, SwipeItem, Header, InfiniteScroll, Button } from 'mint-ui';
 // 格式化时间插件
 import moment from 'moment';
 
-import { Swipe, SwipeItem, Header, InfiniteScroll, Button } from 'mint-ui';
+// mui.js 取消严格模式需要安装 cnpm i babel-plugin-transform-remove-strict-mode -D 插件，在babelrc 文件中添加插件配置文件
 
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
@@ -21,10 +21,11 @@ Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
 
 Vue.component('comment',comment);
+Vue.component(VueResource);
 Vue.use(VueRouter);
 Vue.use(InfiniteScroll);
-Vue.component(VueResource);
 
+Vue.http.options.emulateJSON = true;
 
 Vue.filter('formatDate',function(data,patter='YYYY-MM-DD HH:mm:SS') {
     return moment(data).format(patter);

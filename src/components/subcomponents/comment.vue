@@ -4,7 +4,7 @@
     <hr>
     <textarea maxlength="120" placeholder="发表评论（最多120字数）" rows="5"></textarea>
 
-    <mt-button type="primary" size="large">发表评论</mt-button>
+    <mt-button type="primary" size="large" @click="addComment">发表评论</mt-button>
 
     <div class="cmt-lists">
       <div class="cmt-item">
@@ -48,7 +48,23 @@
 </template>
 
 <script>
-export default {};
+import { Toast } from 'mint-ui';
+export default {
+    data(){
+        return{
+
+        }
+    },
+    methods: {
+        addComment(){
+            Toast({
+                message: '发表成功',
+                position: 'bottom',
+                duration: 2000
+            })
+        }
+    }
+};
 </script>
 
 <style lang="less" scoped>

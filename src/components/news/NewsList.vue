@@ -28,8 +28,6 @@
 import Vue from "vue";
 import VueResrouce from "vue-resource";
 import { Totas } from "mint-ui";
-import { constants } from "crypto";
-import { setTimeout } from 'timers';
 
 Vue.use(VueResrouce);
 
@@ -70,7 +68,6 @@ export default {
         )
         .then(result => {
           this.newsList = this.newsList.concat(result.body.T1467284926140);
-          console.log(this.newsList);
         })
         .catch(err => {
           Totas("加载失败： " + err);

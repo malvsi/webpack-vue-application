@@ -1,6 +1,10 @@
 <template>
   <div>
-    <mt-header fixed title="Webpack·Vue项目"></mt-header>
+    <!-- <mt-header fixed title="Webpack·Vue项目"></mt-header> -->
+    <header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">Webpack·Vue项目</h1>
+		</header>
 
     <div class="app-container">
       <transition>
@@ -39,12 +43,17 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .app-container {
   padding-top: 40px;
   padding-bottom: 50px;
   overflow-x: hidden;
+
 }
+    .mui-bar-nav{
+      background-color: skyblue;
+      z-index: 99;
+    }
 
 .v-enter{
   opacity: 0;
