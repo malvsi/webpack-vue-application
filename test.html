@@ -13,25 +13,28 @@
 
 <body>
     <div id='app'>
+        <input type="button" value="click" @click="getIndex">
     </div>
 
     <script>
-        var s = [{
-            name: 'zz',
-            age: 12
-        },{
-            name: 'asas',
-            lisk: 'soias'
-        }];
+        let app = new Vue({
+            el: '#app',
+            data: {
+                list: [],
+            },
+            created () {
+              this.getIndex();  
+            },
+            methods: {
+                getIndex() {
+                    var len = 20;
+                    for (let i in len) {
+                        console.log(i);
 
-        var a = [
-            {s: 'ss'},
-            {shs: 'ashuis',age: 12}
-        ];
-
-        var s = s.concat(a);
-        // console.log(ss);
-        console.log(s);
+                    }
+                }
+            },
+        })
     </script>
 </body>
 
