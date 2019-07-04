@@ -28,7 +28,33 @@ module.exports = {
             {test: /\.css$/, use: ['style-loader','css-loader']},
             {test: /\.vue$/, use: 'vue-loader'},
             {test: /\.(ttf)/, use: 'url-loader'},
-            {test: /\.less$/, use: ['style-loader','css-loader','less-loader']}
+            {test: /\.less$/, use: ['style-loader','css-loader','less-loader']},
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                  'file-loader',
+                  {
+                    loader: 'image-webpack-loader',
+                    options: {
+                      mozjpeg: {
+                        progressive: true,
+                        quality: 65
+                      },
+                      // optipng.enabled: false will disable optipng
+                      optipng: {
+                        enabled: false,
+                      },
+                      pngquant: {
+                        quality: '65-90',
+                        speed: 4
+                      },
+                      gifsicle: {
+                        interlaced: false,
+                      },
+                    }
+                  },
+                ],
+              }
         ]
     },
     resolve: {

@@ -20,7 +20,7 @@ var router = new VueRouter({
         {path: '/home/photolist', component: photolist},
         {path: '/home/photodetail/:imgid', component: photodetail}
     ],
-    linkActiveClass : 'mui-active'  //覆盖默认的路由高亮的类 默认的类为 router-link-active, mui中高亮的类为 mui-active
+    linkActiveClass : 'mui-active',  //覆盖默认的路由高亮的类 默认的类为 router-link-active, mui中高亮的类为 mui-active
 })
 
 export default router;

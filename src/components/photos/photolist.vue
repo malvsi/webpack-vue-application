@@ -23,14 +23,20 @@
     <div class="photo-content" v-show="flag">
       <!-- 使用 transition-group 包裹需要切换动画的列表项 -->
       <transition-group class="photolist">
-        <router-link tag="li" :to="'/home/photodetail/' + item.id" class="photoitem" v-for="item in photolist" :key="item.id">
-          <img v-lazy="item.url" />
-          <div class="photo-info">
-            <h1>App updated. Recompiling...</h1>
-            <p>This is one-sided shadow effect! Shadow is no longer a real shadow projection, shadow sharpness diffuses outward, more shadow effect!Box-shadow: -2px 0 3px-1px green, //left shadow 0-2px...</p>
-            <p>this is a picture token on the internet</p>
-          </div>
-        </router-link>
+          <router-link
+            tag="li"
+            :to="'/home/photodetail/' + item.id"
+            class="photoitem"
+            v-for="item in photolist"
+            :key="item.id"
+          >
+            <img v-lazy="item.url" />
+            <div class="photo-info">
+              <h1>App updated. Recompiling...</h1>
+              <p>This is one-sided shadow effect! Shadow is no longer a real shadow projection, shadow sharpness diffuses outward, more shadow effect!Box-shadow: -2px 0 3px-1px green, //left shadow 0-2px...</p>
+              <p>this is a picture token on the internet</p>
+            </div>
+          </router-link>
       </transition-group>
     </div>
   </div>
@@ -39,6 +45,7 @@
 <script>
 import mui from "../../lib/mui-master/dist/js/mui.js";
 import { setTimeout } from "timers";
+import { constants } from "crypto";
 
 export default {
   data() {
