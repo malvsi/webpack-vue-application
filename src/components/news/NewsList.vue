@@ -14,7 +14,7 @@
             <h1>{{ item.title }}</h1>
             <p class="mui-ellipsis">
               <span>发表时间：{{ item.mtime | formatDate }}</span>
-              <span>点击：{{ item.votecount | formatNum }}次</span>
+              <span>点击：{{ item.daynum }}次</span>
             </p>
           </div>
         </router-link>
@@ -68,6 +68,7 @@ export default {
         )
         .then(result => {
           this.newsList = this.newsList.concat(result.body.T1467284926140);
+          console.log(this.newsList);
         })
         .catch(err => {
           Totas("加载失败： " + err);

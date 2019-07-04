@@ -11,7 +11,7 @@
     <div class="thumbnail">
       <vue-preview
       :list="list"
-      :thumbImageStyle="{width: '80px', height: '80px', margin: '10px'}"
+      :thumbImageStyle="{width: '80px', height: '80px', margin: '6px', boxShadow: '0 0 6px black'}"
       :previewBoxStyle="{border: '1px solid #eee'}"
       :tapToClose="true"
       @close="closeHandler"
@@ -89,5 +89,6 @@ export default {
             color: black;
         }
     }
+
 }
 </style>
