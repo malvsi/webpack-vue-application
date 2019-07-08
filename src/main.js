@@ -8,7 +8,7 @@ import './lib/mui-master/examples/hello-mui/fonts/mui-icons-extra.ttf';
 import VueRouter from 'vue-router';
 import router from './router.js';
 import VueResource from 'vue-resource';
-import comment from './components/comments/comment.vue';
+import comment from './components/subcomponents/comment.vue';
 // 按需导入 mint-ui
 // import { Swipe, SwipeItem, Header, InfiniteScroll, Button } from 'mint-ui';
 

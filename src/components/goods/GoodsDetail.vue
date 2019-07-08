@@ -1,17 +1,9 @@
 <template>
   <div class="goodsdetail-container">
     <!-- 商品图片展示区域 -->
-    <mt-swipe :auto="3000" class="goods-img">
-      <mt-swipe-item>
-        <img src="../../images/bimimage.jpg" />
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../../images/bimimage.jpg" />
-      </mt-swipe-item>
-      <mt-swipe-item>
-        <img src="../../images/bimimage.jpg" />
-      </mt-swipe-item>
-    </mt-swipe>
+    <div class="goods-img">
+      <swiper :lunbotulist="goodsimg" :isfull="false"></swiper>
+    </div>
 
     <!-- 商品操作区域 -->
     <div class="goods-control">
@@ -65,11 +57,8 @@
       </div>
     </div>
 
-    <!-- 购物车小球的div -->
-    <transition
-      @before-enter="beforeEnter"
-      @enter="enter"
-      @after-enter="afterEnter">
+    <!-- 购物车小球的动画实现 -->
+    <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
       <div class="ball" v-show="ballFlag" ref="ball"></div>
     </transition>
   </div>
@@ -77,12 +66,31 @@
 
 <script>
 import { Toast } from "mint-ui";
+import swiper from "../subcomponents/swiper.vue";
+
 export default {
   data() {
     return {
+      goodsimg: [
+        {
+          id: 1,
+          img_url: require("../../images/bimimage.jpg")
+        },
+        {
+          id: 2,
+          img_url: require("../../images/bimimage.jpg")
+        },
+        {
+          id: 3,
+          img_url: require("../../images/bimimage.jpg")
+        }
+      ],
       Purchase: 0,
-      ballFlag: false,
+      ballFlag: false
     };
+  },
+  components: {
+    swiper
   },
   methods: {
     buygoods() {
@@ -90,7 +98,6 @@ export default {
     },
     addcart() {
       this.ballFlag = !this.ballFlag;
-
 
       Toast({
         message: "加入购物车成功",
@@ -101,9 +108,11 @@ export default {
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
     },
-    enter(el,done) {
+    enter(el, done) {
       const ballPosition = this.$refs.ball.getBoundingClientRect();
-      const cartPosition = document.getElementById('badge').getBoundingClientRect();
+      const cartPosition = document
+        .getElementById("badge")
+        .getBoundingClientRect();
 
       const xDist = cartPosition.left - ballPosition.left;
       const yDist = cartPosition.top - ballPosition.top;
@@ -131,16 +140,15 @@ export default {
     margin-bottom: 6px;
     padding: 20px;
     height: 500px;
-    img {
-      height: 100%;
-      width: 100%;
-      margin: 1px auto;
-    }
+    border-radius: 5px;
+    
   }
 
   .goods-control {
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #bbb;
+    border-radius: 5px;
+
     margin-bottom: 6px;
 
     .control-title {
@@ -155,6 +163,8 @@ export default {
 
     .sell-botton {
       padding: 6px;
+      border-radius: 5px;
+
       * {
         color: black;
       }
@@ -199,6 +209,7 @@ export default {
   .goods-info {
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #bbb;
+    border-radius: 5px;
 
     .info-title {
       margin: 0;
@@ -216,7 +227,7 @@ export default {
     }
   }
 
-  .ball{
+  .ball {
     width: 15px;
     height: 15px;
     border-radius: 50%;
