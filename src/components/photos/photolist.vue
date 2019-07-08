@@ -13,7 +13,7 @@
             :class="['mui-control-item',item.data.id===0? 'mui-active':'']"
             :href="'#item'+ item.data.id  +'mobile'"
             data-wid="tab-top-subpage-1.html"
-            @click="getPhotoList"
+            @tap="getPhotoList"
           >{{ item.data.title | cutInitail}}</a>
         </div>
       </div>

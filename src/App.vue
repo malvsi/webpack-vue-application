@@ -25,7 +25,7 @@
 
       <router-link to="/cart" class="mui-tab-item">
         <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-          <span class="mui-badge">0</span>
+          <span class="mui-badge" id="badge">0</span>
         </span>
         <span class="mui-tab-label">购物车</span>
       </router-link>
@@ -40,7 +40,9 @@
 </template>
 
 <script>
-export default {};
+import { constants } from 'crypto';
+export default {
+};
 </script>
 
 <style lang="less" scoped>

@@ -1,6 +1,24 @@
 <template>
   <div class="goodslist-container">
-    <div class="goods-item" v-for="item in 15" :key="item">
+    <!-- 
+    <router-link to="/home/goodsdetail" class="goods-item" v-for="item in 15" :key="item" tag="div">
+      <img src="../../images/bimimage.jpg" />
+      <h3 class="title">小米8 屏幕指纹版 6GB+128GB</h3>
+      <div class="info">
+        <p class="price">
+          <span class="now">￥2999</span>
+          <span class="old">￥3299</span>
+        </p>
+
+        <p class="sell">
+          <span>热卖中</span>
+          <span>库存60件</span>
+        </p>
+      </div>
+    </router-link>
+ -->
+    <!-- 使用 vue-router 的编程式导航方式 跳转到 指定页面 -->
+    <div class="goods-item" v-for="item in 15" :key="item" @click="gopath()">
       <img src="../../images/bimimage.jpg" />
       <h3 class="title">小米8 屏幕指纹版 6GB+128GB</h3>
       <div class="info">
@@ -16,11 +34,26 @@
       </div>
     </div>
 
+  <mt-button type="danger" size="large" @click="getMore">加载更多</mt-button>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    getMore() {
+      console.log("no more data....");
+    },
+    gopath(id) {
+      // 编程式导航
+      if(id != null) {
+        this.$router.push({path: '/home/goodsdetail/' + id});
+      }else{
+        this.$router.push({path: '/home/goodsdetail'});
+      }
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -42,6 +75,7 @@ export default {};
     justify-content: space-between;
 
     img {
+      margin: 1px auto;
       width: 85%;
       height: 70%;
     }

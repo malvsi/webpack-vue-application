@@ -8,6 +8,7 @@ import newsdetail from './components/news/NewsDetail.vue';
 import photolist from './components/photos/Photolist.vue';
 import photodetail from './components/photos/Photodetail.vue';
 import goodslist from './components/goods/GoodsList.vue';
+import goodsdetail from './components/goods/GoodsDetail.vue';
 
 var router = new VueRouter({
     routes: [
@@ -21,6 +22,7 @@ var router = new VueRouter({
         {path: '/home/photolist', component: photolist},
         {path: '/home/photodetail/:imgid', component: photodetail},
         {path: '/home/goodslist', component: goodslist},
+        {path: '/home/goodsdetail', component: goodsdetail}
     ],
     linkActiveClass : 'mui-active',  //覆盖默认的路由高亮的类 默认的类为 router-link-active, mui中高亮的类为 mui-active
 })
