@@ -101,7 +101,7 @@ export default {
       // 点击加入购物车的时候的操作
 
       console.log(this.count);
-      
+      this.$store.commit('setCount',this.count);
 
       Toast({
         message: "加入购物车成功",

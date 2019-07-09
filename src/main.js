@@ -12,6 +12,9 @@ import comment from './components/subcomponents/comment.vue';
 // 按需导入 mint-ui
 // import { Swipe, SwipeItem, Header, InfiniteScroll, Button } from 'mint-ui';
 
+// 导入vuex插件
+import Vuex from 'vuex';
+
 // 完整导入 mint-ui
 import MintUi from 'mint-ui';
 // 导入缩略图插件 vue-preview 通过：cnpm i vue-preview -S 安装github地址：https://github.com/LS1231/vue-preview
@@ -29,6 +32,7 @@ Vue.component(Button.name, Button);
 Vue.use(InfiniteScroll);
  */
 
+ Vue.use(Vuex);
 Vue.use(VuePreview);
 Vue.use(MintUi);
 Vue.component('comment', comment);
@@ -41,8 +45,20 @@ Vue.filter('formatDate', function (data, patter = 'YYYY-MM-DD HH:mm:SS') {
     return moment(data).format(patter);
 })
 
+const store = new Vuex.Store({
+    state: {
+        count: 0,
+    },
+    mutations: {
+        setCount(state,n) {
+            state.count = n;
+        }
+    }
+})
+
 var vm = new Vue({
     el: '#app',
     render: c => c(app),
     router,
+    store,
 })
