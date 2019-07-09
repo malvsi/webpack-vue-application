@@ -99,9 +99,18 @@ export default {
       this.ballFlag = !this.ballFlag;
 
       // 点击加入购物车的时候的操作
+      // cart 保存着当前商品信息的关键数据
+      var cart = {
+        id: 8086,
+        title: '小米（Mi）小米Note 16G双网通版',
+        count: this.count,
+        selected: true,
+        price: 2199
+      };
 
-      console.log(this.count);
-      this.$store.commit('setCount',this.count);
+    
+      // 把 当前操作的商品数据信息 保存到 store 对象中
+      this.$store.commit('addGoodsToCart',cart);
 
       Toast({
         message: "加入购物车成功",

@@ -12,7 +12,7 @@ import comment from './components/subcomponents/comment.vue';
 // 按需导入 mint-ui
 // import { Swipe, SwipeItem, Header, InfiniteScroll, Button } from 'mint-ui';
 
-// 导入vuex插件
+// 注册 Vuex
 import Vuex from 'vuex';
 
 // 完整导入 mint-ui
@@ -32,7 +32,7 @@ Vue.component(Button.name, Button);
 Vue.use(InfiniteScroll);
  */
 
- Vue.use(Vuex);
+Vue.use(Vuex);
 Vue.use(VuePreview);
 Vue.use(MintUi);
 Vue.component('comment', comment);
@@ -47,11 +47,26 @@ Vue.filter('formatDate', function (data, patter = 'YYYY-MM-DD HH:mm:SS') {
 
 const store = new Vuex.Store({
     state: {
-        count: 0,
+        cart: [],
     },
     mutations: {
-        setCount(state,n) {
-            state.count = n;
+        addGoodsToCart(state, n) {
+
+            // 判断 购物车中是否已经存在某一个商品id的数据信息
+            // 如果存在 则把当前商品数据的 count 加上目前添加的数量
+            // 如果没有，则把目前的商品数据信息 push 到 cart 数组中
+            var flag = false;
+            flag = state.cart.some(item => {
+                if (item.id === n.id) {
+                    item.count += parseInt(n.count);
+                    return true;
+                }
+            })
+
+            if (!flag) {
+                state.cart.push(n);
+            }
+
         }
     },
     geters: {
@@ -65,5 +80,5 @@ var vm = new Vue({
     el: '#app',
     render: c => c(app),
     router,
-    store,
+    store, // 挂载 store 状态管理对象
 })
