@@ -23,19 +23,7 @@
           </span>
         </p>
 
-        <div class="mui-content-padded">
-          购买数量:
-          <div class="mui-numbox">
-            <button
-              class="mui-btn mui-btn-numbox-minus"
-              type="button"
-              @click="Purchase-=1"
-              :disabled="Purchase===0"
-            >-</button>
-            <input class="mui-input-numbox" type="number" v-model="Purchase" />
-            <button class="mui-btn mui-btn-numbox-plus" type="button" @click="Purchase+=1">+</button>
-          </div>
-        </div>
+        <numberbox :maxcount="maxCount" @cb="countchange"></numberbox>
 
         <div class="control-button">
           <mt-button type="primary" size="normal" @click="buygoods">立即购买</mt-button>
@@ -44,22 +32,25 @@
       </div>
     </div>
 
-    <!-- 商品介绍区域 -->
-    <div class="goods-info">
-      <div class="info-title">
-        <h1>商品参数</h1>
+    <div class="mui-card">
+      <div class="mui-card-header">商品参数</div>
+      <div class="mui-card-content">
+        <div class="mui-card-content-inner">
+          <p>商品货号：</p>
+          <p>库存情况：{{ }}</p>
+          <p>上架时间：</p>
+        </div>
       </div>
-
-      <div class="info-group">
-        <p>商品货号：shaihas</p>
-        <p>库存情况：60件</p>
-        <p>上架时间：2015-4-20 01:19:30</p>
+      <div class="mui-card-footer">
+        <mt-button type="primary" size="large" plain @click="godesc">图文介绍</mt-button>
+        <mt-button type="danger" size="large" plain @click="gocomments">商品评论</mt-button>
       </div>
     </div>
+    <!-- </div> -->
 
     <!-- 购物车小球的动画实现 -->
     <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
-      <div class="ball" v-show="ballFlag" ref="ball"></div>
+      <div class="ball" v-show="ballFlag" ref="ball">{{ count }}</div>
     </transition>
   </div>
 </template>
@@ -67,6 +58,8 @@
 <script>
 import { Toast } from "mint-ui";
 import swiper from "../subcomponents/swiper.vue";
+import mui from "../../lib/mui-master/dist/js/mui.min.js";
+import numberbox from "../subcomponents/numberbox.vue";
 
 export default {
   data() {
@@ -85,12 +78,18 @@ export default {
           img_url: require("../../images/bimimage.jpg")
         }
       ],
-      Purchase: 0,
-      ballFlag: false
+      ballFlag: false,
+      maxCount: 10,
+      count: 1,
     };
   },
+
+  created() {
+    this.getSimulateMaxCount();
+  },
   components: {
-    swiper
+    swiper,
+    numberbox
   },
   methods: {
     buygoods() {
@@ -98,6 +97,11 @@ export default {
     },
     addcart() {
       this.ballFlag = !this.ballFlag;
+
+      // 点击加入购物车的时候的操作
+
+      console.log(this.count);
+      
 
       Toast({
         message: "加入购物车成功",
@@ -109,7 +113,9 @@ export default {
       el.style.transform = "translate(0,0)";
     },
     enter(el, done) {
+      // 获取小球的位置
       const ballPosition = this.$refs.ball.getBoundingClientRect();
+      // 获取购物车的位置
       const cartPosition = document
         .getElementById("badge")
         .getBoundingClientRect();
@@ -118,13 +124,25 @@ export default {
       const yDist = cartPosition.top - ballPosition.top;
       el.offsetWidth;
       el.style.transform = `translate(${xDist}px,${yDist}px)`;
-      // el.style.transform = "translate(380px,922px)";
-      // el.style.transform = "translate(250px,276px)";
-      el.style.transition = "all 1s cubic-bezier(0.1, 0.7, 1.0, 0.1)";
+      el.style.transition = "all 0.5s cubic-bezier(0.1, 0.7, 1.0, 0.1)";
       done();
     },
     afterEnter(el) {
       this.ballFlag = !this.ballFlag;
+    },
+    godesc() {
+      this.$router.push({ name: "goodsdesc", params: "" });
+    },
+    gocomments() {
+      this.$router.push({ name: "goodscomments", params: "" });
+    },
+    getSimulateMaxCount() {
+      this.$http.get("https://api.apiopen.top/videoCategory").then(result => {
+        this.maxCount = result.body.result.itemList[3].data.id;
+      });
+    },
+    countchange(data) {
+      this.count = data;
     }
   }
 };
@@ -133,7 +151,6 @@ export default {
 <style lang="less" scoped>
 .goodsdetail-container {
   padding: 10px;
-
   .goods-img {
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #bbb;
@@ -141,7 +158,10 @@ export default {
     padding: 20px;
     height: 500px;
     border-radius: 5px;
-    
+
+    .mint-swipe {
+      height: 500px;
+    }
   }
 
   .goods-control {
@@ -168,6 +188,11 @@ export default {
       * {
         color: black;
       }
+
+      .mui-content-padded[data-v-ee82b1e4]{
+        font-size: 14px;
+      }
+    }
 
       .price {
         margin: 0;
@@ -206,24 +231,18 @@ export default {
     }
   }
 
-  .goods-info {
+  .mui-card {
     border: 1px solid #ccc;
     box-shadow: 0 0 4px #bbb;
     border-radius: 5px;
+    margin: 0px;
 
-    .info-title {
-      margin: 0;
-      padding: 6px;
-      border-bottom: 1px solid #ccc;
-      h1 {
-        font-size: 23px;
-        font-weight: normal;
+    .mui-card-footer {
+      display: block;
+
+      button {
+        margin: 15px 0;
       }
-    }
-
-    .info-group {
-      color: #ccc;
-      padding: 6px;
     }
   }
 
@@ -231,11 +250,12 @@ export default {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background-color: red;
+    // background-color: red;
+    color:red;
     z-index: 99;
     position: absolute;
     top: 646px;
     left: 130px;
   }
-}
+
 </style>

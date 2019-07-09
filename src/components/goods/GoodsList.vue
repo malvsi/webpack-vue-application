@@ -17,6 +17,7 @@
       </div>
     </router-link>
  -->
+ 
     <!-- 使用 vue-router 的编程式导航方式 跳转到 指定页面 -->
     <div class="goods-item" v-for="item in 15" :key="item" @click="gopath()">
       <img src="../../images/bimimage.jpg" />

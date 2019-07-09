@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { constants } from 'crypto';
 export default {
 };
 </script>
