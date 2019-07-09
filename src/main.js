@@ -53,6 +53,11 @@ const store = new Vuex.Store({
         setCount(state,n) {
             state.count = n;
         }
+    },
+    geters: {
+        optCount(state) {
+            // return '当前数值'
+        }
     }
 })
 
