@@ -23,6 +23,7 @@
           </span>
         </p>
 
+        <!-- 购买区域 -->
         <numberbox :maxcount="maxCount" @cb="countchange"></numberbox>
 
         <div class="control-button">
@@ -32,6 +33,7 @@
       </div>
     </div>
 
+    <!-- 商品详情 -->
     <div class="mui-card">
       <div class="mui-card-header">商品参数</div>
       <div class="mui-card-content">
@@ -46,7 +48,6 @@
         <mt-button type="danger" size="large" plain @click="gocomments">商品评论</mt-button>
       </div>
     </div>
-    <!-- </div> -->
 
     <!-- 购物车小球的动画实现 -->
     <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
@@ -60,6 +61,7 @@ import { Toast } from "mint-ui";
 import swiper from "../subcomponents/swiper.vue";
 import mui from "../../lib/mui-master/dist/js/mui.min.js";
 import numberbox from "../subcomponents/numberbox.vue";
+import { setTimeout } from 'timers';
 
 export default {
   data() {
@@ -78,14 +80,14 @@ export default {
           img_url: require("../../images/bimimage.jpg")
         }
       ],
+      maxCount: 28,
       ballFlag: false,
-      maxCount: 10,
-      count: 1,
+      count: 1
     };
   },
 
   created() {
-    this.getSimulateMaxCount();
+    // this.getSimulateMaxCount();
   },
   components: {
     swiper,
@@ -95,28 +97,22 @@ export default {
     buygoods() {
       console.log("购买成功");
     },
-    addcart() {
+    addcart() {   // 加入购物车要执行的逻辑操作
       this.ballFlag = !this.ballFlag;
 
       // 点击加入购物车的时候的操作
       // cart 保存着当前商品信息的关键数据
       var cart = {
         id: 8086,
-        title: '小米（Mi）小米Note 16G双网通版',
+        title: "小米（Mi）小米Note 16G双网通版",
         count: this.count,
         selected: true,
-        price: 2199
+        price: 2199,
+        max: this.maxCount,
       };
 
-    
       // 把 当前操作的商品数据信息 保存到 store 对象中
-      this.$store.commit('addGoodsToCart',cart);
-
-      Toast({
-        message: "加入购物车成功",
-        position: "bottom",
-        duration: 1000
-      });
+      this.$store.commit("addGoodsToCart", cart);
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
@@ -198,73 +194,72 @@ export default {
         color: black;
       }
 
-      .mui-content-padded[data-v-ee82b1e4]{
+      .mui-content-padded[data-v-ee82b1e4] {
         font-size: 14px;
       }
     }
 
-      .price {
-        margin: 0;
-        .market-price {
-          span {
-            text-decoration: line-through;
-          }
-        }
-        .sell-price {
-          margin-left: 10px;
-          span {
-            color: red;
-            font-size: 18px;
-          }
+    .price {
+      margin: 0;
+      .market-price {
+        span {
+          text-decoration: line-through;
         }
       }
-
-      .mui-content-padded {
-        margin: 3px 0;
-
-        font-size: 13px;
-        line-height: 16px;
-        mui-numbox {
-          height: 80%;
-        }
-      }
-
-      .control-button {
-        margin: 3px 0;
-        padding: 10px;
-        font-size: 16px;
-        * {
-          color: white;
+      .sell-price {
+        margin-left: 10px;
+        span {
+          color: red;
+          font-size: 18px;
         }
       }
     }
-  }
 
-  .mui-card {
-    border: 1px solid #ccc;
-    box-shadow: 0 0 4px #bbb;
-    border-radius: 5px;
-    margin: 0px;
+    .mui-content-padded {
+      margin: 3px 0;
 
-    .mui-card-footer {
-      display: block;
+      font-size: 13px;
+      line-height: 16px;
+      mui-numbox {
+        height: 80%;
+      }
+    }
 
-      button {
-        margin: 15px 0;
+    .control-button {
+      margin: 3px 0;
+      padding: 10px;
+      font-size: 16px;
+      * {
+        color: white;
       }
     }
   }
+}
 
-  .ball {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    // background-color: red;
-    color:red;
-    z-index: 99;
-    position: absolute;
-    top: 646px;
-    left: 130px;
+.mui-card {
+  border: 1px solid #ccc;
+  box-shadow: 0 0 4px #bbb;
+  border-radius: 5px;
+  margin: 0px;
+
+  .mui-card-footer {
+    display: block;
+
+    button {
+      margin: 15px 0;
+    }
   }
+}
 
+.ball {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  // background-color: red;
+  color: red;
+  z-index: 99;
+  position: absolute;
+  top: 646px;
+  left: 130px;
+}
 </style>

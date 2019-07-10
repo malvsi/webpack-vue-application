@@ -16,10 +16,16 @@ export default {
   props: ['maxcount'],
   data() {
     return{
+      max: 0,
     }
   },
   mounted() {
     mui(".mui-numbox").numbox();
+        mui(".mui-numbox").numbox().setOption('max', this.max);
+
+  },
+  created() {
+    this.max = this.maxcount;
   },
   methods: {
     countChange() {
@@ -28,7 +34,7 @@ export default {
   },
   watch: {
     'maxcount': function(nVal,oVal) {
-        mui(".mui-numbox").numbox().setOption('max',nVal);
+        // mui(".mui-numbox").numbox().setOption('max',nVal);
     }
   }
 };

@@ -24,7 +24,7 @@
 
         <router-link to="/cart" class="mui-tab-item">
           <span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-            <span class="mui-badge" id="badge">{{ count }}</span>
+            <span class="mui-badge" id="badge">{{ this.$store.getters.getAllCount }}</span>
           </span>
           <span class="mui-tab-label">购物车</span>
         </router-link>
@@ -40,19 +40,6 @@
 
 <script>
 export default {
-  computed: {
-    count() {
-      if (this.$store.state.cart.length != 0) {
-        var goodsCount = 0;
-        this.$store.state.cart.forEach(item => {
-          goodsCount += item.count;
-        });
-        return goodsCount;
-      } else {
-        return 0;
-      }
-    }
-  }
 };
 </script>
 
