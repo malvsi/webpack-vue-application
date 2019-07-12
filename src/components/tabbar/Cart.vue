@@ -2,17 +2,25 @@
   <div class="shopcart-container">
     <!-- 商品列表区域 -->
     <div class="goodslist">
-      <div class="mui-card">
+      <div class="mui-card" v-for="(item,i) in goodslist" :key="item.id">
         <div class="mui-card-content">
           <div class="mui-card-content-inner">
-            <mt-switch v-model="checked" @change="check"></mt-switch>
+            <mt-switch
+              v-model="$store.getters.getGoodsSelected[item.id]"
+              @change="check($store.getters.getGoodsSelected[item.id],item.id)"
+            ></mt-switch>
             <img src="../../images/bimimage.jpg" />
             <div class="info">
-              <h1>小米（Mi）小米Note 16G双网通版</h1>
+              <h1>{{ item.title }}</h1>
               <p>
-                <span class="price">￥2199</span>
-                <numberbox style="height:25px" :maxcount="maxCount" @cb="countChange"></numberbox>
-                <a href="#">删除</a>
+                <span class="price">￥{{ item.price }}</span>
+                <numberbox
+                  style="height:25px"
+                  @cb="countChange"
+                  :count="item.count"
+                  :goodsid="item.id"
+                ></numberbox>
+                <a href="#" @click="delDoodsFromCart(item.id,i)">删除</a>
               </p>
             </div>
           </div>
@@ -24,9 +32,20 @@
     <div class="settlement">
       <div class="mui-card">
         <div class="mui-card-content">
-          <div
-            class="mui-card-content-inner"
-          >这是一个最简单的卡片视图控件；卡片视图常用来显示完整独立的一段信息，比如一篇文章的预览图、作者信息、点赞数量等</div>
+          <div class="mui-card-content-inner">
+            <div class="left">
+              <p>
+                合计：
+                <span class="total">￥{{ $store.getters.getTotalPrice }}</span>
+              </p>
+            </div>
+            <div class="right">
+              <mt-button type="danger">
+                去结算(
+                <span>{{ $store.getters.getAllCount }}</span> )
+              </mt-button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,31 +57,34 @@ import numberbox from "../subcomponents/cart-numerbox.vue";
 export default {
   data() {
     return {
-      checked: true,
+      goodslist: [],
       maxCount: 0,
-      count: 0
+      checkall: ""
     };
   },
   created() {
-    this.getCurrentGoodsMaxCount();
+    this.getGoodsList();
   },
   methods: {
-    check() {
-      this.$store.commit("addCheckGoods", this.checked);
+    getGoodsList() {
+      var list = this.$store.getters.getGoodsList;
+
+      if (list.length == 0) {
+        this.goodslist = this.$store.getters.getInitGoodsList;
+        console.log("form getInitGoodsList");
+      } else {
+        this.goodslist = list;
+        console.log("form getGoodsList");
+      }
     },
-    getCurrentGoodsMaxCount() {
-      // 获取当前商品的最大可购买数量
-      //   this.$http.get("https://api.apiopen.top/videoCategory").then(result => {
-      //     this.maxCount = result.body.result.itemList[3].data.id;
-      //     console.log(this.maxCount);
-      //   });
-    //   this.$store.commit("getMaxCountForId", 8086);
-      this.maxCount = this.$store.getters.getMaxCount;
-    //   console.log(this.maxCount);
+    check(flag, id) {
+      this.$store.commit("updateGoodsSelected", { selected: flag, id: id });
     },
-    countChange(data) {
-      this.count = data;
-      this.$store.commit("setGoodsCount", data);
+    countChange(info) {
+      this.$store.commit("updateGoodsCount", info);
+    },
+    delDoodsFromCart(id, i) {
+      this.$store.commit("delGoodsForId", { id: id, index: i });
     }
   },
   components: {
@@ -96,6 +118,40 @@ export default {
 
         .price {
           color: red;
+        }
+      }
+    }
+  }
+
+  .settlement {
+    .mui-card-content-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .left {
+        p {
+          margin: 0;
+        }
+        * {
+          color: black;
+        }
+
+        .total {
+          font-size: 16px;
+          color: red;
+          font-weight: bold;
+        }
+      }
+
+      .right {
+        .mint-button {
+          font-size: 16px;
+          font-weight: normal;
+          span {
+            font-weight: bold;
+            font-size: 18px;
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="mui-numbox" data-numbox-min="1">
     <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-    <input class="mui-input-numbox" type="number" value="1" ref="numbox" @change="countChange" />
+    <input class="mui-input-numbox" type="number" v-model="count" ref="numbox" @change="countChange" readonly/>
     <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
   </div>
 </template>
@@ -10,25 +10,23 @@
 import mui from "../../lib/mui-master/dist/js/mui.min.js";
 
 export default {
-  props: ["maxcount"],
+  props: ["maxcount","count","goodsid"],
   data() {
     return {
-      numberValue: 0,
     };
   },
   mounted() {
-    // mui(".mui-numbox").numbox();
-    mui(".mui-numbox")
-      .numbox()
-      .setValue(this.$store.getters.getGoodsCount);
-      console.log("he....");
-    // mui(".mui-numbox").numbox().setOption('max',this.max);
-
+    mui(".mui-numbox").numbox();
+    
   },
   methods: {
     countChange() {
       // 当购物车中 当前商品 数量发生变化时，
-      this.$emit("cb", parseInt(this.$refs.numbox.value));
+      this.$emit("cb", {count:this.$refs.numbox.value, id: this.goodsid });
+
+      mui(".mui-numbox")
+      .numbox()
+      .setOption('max',this.maxcount);
     }
   },
   watch: {

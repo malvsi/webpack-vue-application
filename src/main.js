@@ -55,14 +55,18 @@ var cart = JSON.parse(localStorage.getItem('cart') || '[]');
 const store = new Vuex.Store({
     state: {
         cart: cart,
-        maxs: 0,
+        // cart: [],
     },
     mutations: {
-        addGoodsToCart(state, n) {
+        updateToLocalStorage(state) {
+            localStorage.setItem('cart', JSON.stringify(state.cart));
+        },
+        addGoodsToCart(state, n) { // 在商品详情页中点击加入购物车的逻辑处理
 
             // 判断 购物车中是否已经存在某一个商品id的数据信息
             // 如果存在 则把当前商品数据的 count 加上目前添加的数量
             // 如果没有，则把目前的商品数据信息 push 到 cart 数组中
+
             var flag = false;
             flag = state.cart.some(item => {
 
@@ -88,35 +92,44 @@ const store = new Vuex.Store({
                 }
             })
 
+            console.log(flag);
             if (!flag) {
                 state.cart.push(n);
+                console.log(state.cart);
             }
 
             // 加入购物车的同时 也把商品信息 存储到本地存储 localStorage 中
-            localStorage.setItem('cart', JSON.stringify(state.cart));
-
+            store.commit('updateToLocalStorage');
         },
-        addCheckGoods(state, flag) { // 根据购物车中
-            if (flag) { // 当前商品被选中时，商品的 数据信息 应该绑定到 购物车的小红点中
-                console.log("该商品被选中");
-            } else { // 当前商品未选中时，商品的数据信息与购物车小红点解绑
-                console.log("商品未选中");
-            }
-        },
-        getMaxCountForId(state, id) { // 根据商品ID获取商品的maxcount值
-            var maxs = 0;
-            var flag = state.cart.some(item => {
-                if (item.id == id) {
-                    maxs = item.max;
-                    return true;
+        updateGoodsCount(state, info) { // 设置商品购买数量
+            state.cart.forEach(item=>{
+                if(item.id === info.id) {
+                    item.count = parseInt(info.count);
                 }
-            })
-            if (flag) {
-                state.maxs = maxs;
-            }
+            });
+
+            // 加入购物车的同时 也把商品信息 存储到本地存储 localStorage 中
+            store.commit('updateToLocalStorage');
         },
-        setGoodsCount(state, count) {
-            state.cart[0].count = count;
+        updateGoodsSelected(state, o) {     // 更新商品的 selected 选中状态
+            state.cart.forEach(item=>{
+                if(item.id === o.id) {
+                    item.selected = o.selected;
+                }
+            });
+
+            // 更新 商品 选中状态时，把更新后的数据存储到 本地内存中
+            store.commit('updateToLocalStorage');
+        },
+        delGoodsForId(state, info) {
+            state.cart.forEach(item=>{
+                if(item.id === info.id) {
+                    state.cart.splice(info.index,1);
+                }
+            });
+
+            // 删除 商品 时，把更新后的数据存储到 本地内存中
+            store.commit('updateToLocalStorage');
         },
     },
     getters: {
@@ -124,20 +137,58 @@ const store = new Vuex.Store({
             if (state.cart.length != 0) {
                 var allCount = 0;
                 state.cart.forEach(item => {
-                    allCount += item.count;
+                    if(item.selected){
+                        allCount += parseInt(item.count);
+                    }
                 });
                 return allCount;
             } else {
                 return 0;
             }
         },
-        getGoodsCount(state) {
+        getGoodsList(state) { // 获取购物车中 商品的列表
+            return state.cart;
+        },
+        getGoodsCount(state) { // 获取购物车商品的数量
             return state.cart[0].count;
         },
-        getMaxCount(state) {
-            return state.maxs;
+        getGoodsSelected(state) {   // 获取商品的 selected 选中状态
+            var o = {};
+            state.cart.forEach(item=>{
+                o[item.id] = item.selected;
+            })
+            return o;
         },
+        getTotalPrice(state) {
+            var total = 0;
+            state.cart.forEach(item=>{
+                if(item.selected) {
+                    total += parseInt(item.price) * parseInt(item.count);
+                }
+            })
+            return total;
+        },
+        getInitGoodsList(state) {   // 初始化默认在购物车中挂载两条数据
+            var list =  [{
+                id: 87,
+                title: '小米9「6GB+128GB版本直降200元，仅需2799元」',
+                count: 2,
+                price: 2799,
+                max: 8,
+                selected: true
+            },
+            {
+                id: 88,
+                title: '小米MIX 3「8GB+128GB闪降1000元，到手价2599元」',
+                count: 5,
+                price: 2599,
+                max: 9,
+                selected: true
+            }];
 
+            state.cart = list;
+            return list;
+        }
     }
 })
 

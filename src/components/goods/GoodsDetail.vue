@@ -85,10 +85,6 @@ export default {
       count: 1
     };
   },
-
-  created() {
-    // this.getSimulateMaxCount();
-  },
   components: {
     swiper,
     numberbox
@@ -102,8 +98,8 @@ export default {
 
       // 点击加入购物车的时候的操作
       // cart 保存着当前商品信息的关键数据
-      var cart = {
-        id: 8086,
+      var goodsinfo = {
+        id: 89,
         title: "小米（Mi）小米Note 16G双网通版",
         count: this.count,
         selected: true,
@@ -112,7 +108,7 @@ export default {
       };
 
       // 把 当前操作的商品数据信息 保存到 store 对象中
-      this.$store.commit("addGoodsToCart", cart);
+      this.$store.commit("addGoodsToCart",goodsinfo);
     },
     beforeEnter(el) {
       el.style.transform = "translate(0,0)";
@@ -141,12 +137,7 @@ export default {
     gocomments() {
       this.$router.push({ name: "goodscomments", params: "" });
     },
-    getSimulateMaxCount() {
-      this.$http.get("https://api.apiopen.top/videoCategory").then(result => {
-        this.maxCount = result.body.result.itemList[3].data.id;
-      });
-    },
-    countchange(data) {
+    countchange(data) { // 有问题
       this.count = data;
     }
   }
