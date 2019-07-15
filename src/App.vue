@@ -49,12 +49,10 @@ export default {
   },
   created() {
     this.flag = this.$route.path === '/home' ? false : true;
-    console.log(this.flag);
   },
   methods: {
     goback() {
       this.$router.go(-1);
-      console.log(this.flag);
     }
   },
   watch: {
