@@ -2,7 +2,9 @@
   <div>
     <!-- <mt-header fixed title="Webpack·Vue项目"></mt-header> -->
     <header class="mui-bar mui-bar-nav">
-      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <span slot="left" v-show="flag" @click="goback">
+        <mt-button icon="back">返回</mt-button>
+      </span>
       <h1 class="mui-title">Webpack·Vue项目</h1>
     </header>
 
@@ -40,6 +42,30 @@
 
 <script>
 export default {
+  data() {
+    return{
+      flag: false,
+    }
+  },
+  created() {
+    this.flag = this.$route.path === '/home' ? false : true;
+    console.log(this.flag);
+  },
+  methods: {
+    goback() {
+      this.$router.go(-1);
+      console.log(this.flag);
+    }
+  },
+  watch: {
+    "$route.path": function(nVal) {
+        if(nVal === "/home") {
+          this.flag = false;
+        }else{
+          this.flag = true;
+        }
+    }
+  }
 };
 </script>
 
@@ -50,8 +76,13 @@ export default {
   overflow-x: hidden;
 }
 .mui-bar-nav {
-  background-color: skyblue;
+    background-color: skyblue;
   z-index: 99;
+
+  .mint-button--normal{
+    background-color: skyblue;
+    color: black;
+  }
 }
 
 .v-enter {
