@@ -92,10 +92,9 @@ const store = new Vuex.Store({
                 }
             })
 
-            console.log(flag);
+
             if (!flag) {
                 state.cart.push(n);
-                console.log(state.cart);
             }
 
             // 加入购物车的同时 也把商品信息 存储到本地存储 localStorage 中

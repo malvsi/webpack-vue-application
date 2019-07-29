@@ -29,8 +29,6 @@ export default {
       .setOption('max',this.maxcount);
     }
   },
-  watch: {
-  }
 };
 </script>
 
